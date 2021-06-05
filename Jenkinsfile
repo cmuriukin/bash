@@ -55,6 +55,7 @@ do
     fi
     echo "Iteration no $a"
 done'''
+        input(message: 'Deploy?', ok: 'Yes')
       }
     }
 
