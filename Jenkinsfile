@@ -2,25 +2,10 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        echo 'Building'
-        sh '''#!/bin/bash
-for a in 1 2 3 4 5 6 7 8 9 10
-do 
-	if [ $a == 10 ];
-    then 
-    	sleep 10
-    fi
-    echo "Iteration no $a"
-done'''
-      }
-    }
-
-    stage('Test') {
       parallel {
-        stage('Test') {
+        stage('Build') {
           steps {
-            echo 'Testing'
+            echo 'Building'
             sh '''#!/bin/bash
 for a in 1 2 3 4 5 6 7 8 9 10
 do 
@@ -30,16 +15,31 @@ do
     fi
     echo "Iteration no $a"
 done'''
-            fingerprint 'target/**/* test.xml'
           }
         }
 
-        stage('') {
+        stage('finger') {
           steps {
-            timeout(time: 50)
+            fingerprint 'target/**/*text.txt'
           }
         }
 
+      }
+    }
+
+    stage('Test') {
+      steps {
+        echo 'Testing'
+        sh '''#!/bin/bash
+for a in 1 2 3 4 5 6 7 8 9 10
+do 
+	if [ $a == 10 ];
+    then 
+    	sleep 10
+    fi
+    echo "Iteration no $a"
+done'''
+        fingerprint 'target/**/* test.xml'
       }
     }
 
