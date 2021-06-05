@@ -28,6 +28,7 @@ do
     fi
     echo "Iteration no $a"
 done'''
+        fingerprint 'target/**/* test.xml'
       }
     }
 
