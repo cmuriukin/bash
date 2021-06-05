@@ -17,9 +17,11 @@ done'''
     }
 
     stage('Test') {
-      steps {
-        echo 'Testing'
-        sh '''#!/bin/bash
+      parallel {
+        stage('Test') {
+          steps {
+            echo 'Testing'
+            sh '''#!/bin/bash
 for a in 1 2 3 4 5 6 7 8 9 10
 do 
 	if [ $a == 10 ];
@@ -28,7 +30,16 @@ do
     fi
     echo "Iteration no $a"
 done'''
-        fingerprint 'target/**/* test.xml'
+            fingerprint 'target/**/* test.xml'
+          }
+        }
+
+        stage('') {
+          steps {
+            timeout(time: 50)
+          }
+        }
+
       }
     }
 
