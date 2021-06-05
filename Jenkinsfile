@@ -29,6 +29,7 @@ do
     echo "Iteration no $a"
 done'''
         fingerprint 'target/**/* test.xml'
+        junit 'target/**/* test.xml'
       }
     }
 
